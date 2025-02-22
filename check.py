@@ -1,9 +1,6 @@
-from sentence_transformers import SentenceTransformer
-import torch
+from InstructorEmbedding import INSTRUCTOR
 
-# Load the instructor-xl model
-device = "cuda" if torch.cuda.is_available() else "cpu"
-model = SentenceTransformer("hkunlp/instructor-xl",device=device)
+model = INSTRUCTOR('hkunlp/instructor-xl')
 
 texts = [
     ["Represent a sentence for retrieval", "Hugging Face provides state-of-the-art NLP models."],

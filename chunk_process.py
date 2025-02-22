@@ -10,7 +10,7 @@ def get_chunks(raw_text):
         length_function=len
     )
     chunks = text_splitter.split_text(raw_text)
-    data = [["Represent a sentence for retrieval",chunk] for chunk in chunks]
+    data = [[instruction,chunk] for chunk in chunks]
     return chunks,data
 
 

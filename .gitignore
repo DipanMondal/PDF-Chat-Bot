@@ -8,3 +8,5 @@ chroma_db
 *.so
 .env
 .gitignore
+check.py
+test.py
