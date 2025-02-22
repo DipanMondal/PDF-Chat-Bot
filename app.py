@@ -49,10 +49,10 @@ def main():
                         # get chunks
                         chunks,data = get_chunks(raw_text)
                         # vectorize the chunks and store them
-                        embeddings = embedding.get_embeddings(data)
+                        embeddings = embedding.get_embeddings(chunks)
                         # store invector database
                         store_data(chunks=chunks,embeddings=embeddings,name=pdf_doc.name)
-                        # print("Stored data")
+                        print("Stored data")
 
 
 if __name__ == '__main__':

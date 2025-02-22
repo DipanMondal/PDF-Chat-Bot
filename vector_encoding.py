@@ -1,21 +1,29 @@
 from InstructorEmbedding import INSTRUCTOR
+from dotenv import load_dotenv
+import os
+import requests
 
+
+load_dotenv()
 
 class Embedding:
     def __init__(self,model_name="hkunlp/instructor-xl"):
-        self.model = INSTRUCTOR(model_name)
+        self.model_id = "sentence-transformers/all-MiniLM-L6-v2"
+        self.__hf_token = os.getenv('HF_TOKEN_READ')
+        self.__api_url = f"https://api-inference.huggingface.co/pipeline/feature-extraction/{self.model_id}"
+        self.__headers = {"Authorization": f"Bearer {self.__hf_token}"}
 
-    def get_embeddings(self, text_chunks):
-        embeddings = self.model.encode(text_chunks)
-        return embeddings
+    def get_embeddings(self, texts):
+        response = requests.post(self.__api_url, headers=self.__headers, json={"inputs": texts, "options": {"wait_for_model": True}})
+        return response.json()
 
 
 ob = Embedding()
 
 if __name__ == '__main__':
     texts = [
-        ["Represent a sentence for retrieval", "Hugging Face provides state-of-the-art NLP models."],
-        ["Represent a query for retrieval", "Best embedding models for NLP?"]
+        "Hugging Face provides state-of-the-art NLP models.",
+        "Best embedding models for NLP?"
     ]
     embeddings = ob.get_embeddings(texts)
     print(embeddings)

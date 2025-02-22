@@ -26,5 +26,5 @@ Trump is the central figure of the Trumpism movement. Many of his comments and a
 
 Trump began his second presidency by pardoning around 1,500 January 6 rioters, attempting to reduce the size of the federal workforce, and initiating a mass deportation program of illegal immigrants. His broad and extensive use of executive orders has drawn dozens of lawsuits challenging their legality.
     """
-    l=get_chunks(text)
+    l,data=get_chunks(text)
     print(len(l))
