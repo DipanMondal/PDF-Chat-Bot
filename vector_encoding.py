@@ -6,9 +6,10 @@ import requests
 
 load_dotenv()
 
+
 class Embedding:
-    def __init__(self,model_name="hkunlp/instructor-xl"):
-        self.model_id = "sentence-transformers/all-MiniLM-L6-v2"
+    def __init__(self, model_name="sentence-transformers/all-MiniLM-L6-v2"):
+        self.model_id = model_name
         self.__hf_token = os.getenv('HF_TOKEN_READ')
         self.__api_url = f"https://api-inference.huggingface.co/pipeline/feature-extraction/{self.model_id}"
         self.__headers = {"Authorization": f"Bearer {self.__hf_token}"}

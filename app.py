@@ -5,14 +5,36 @@ from vector_encoding import *
 from vector_store import *
 from vector_encoding import ob as embedding
 from memory import memory as mem
+from chatbot import chatbot
+from templates import css, user_template, bot_template
 
-# embedding = Embedding()
+
+def handle_user_input(user_input):
+    for chat in st.session_state.chats:
+        st.write(user_template.replace('{{MSG}}',chat[0]), unsafe_allow_html=True)
+        st.write(bot_template.replace('{{MSG}}', chat[1]), unsafe_allow_html=True)
+    embd = embedding.get_embeddings(user_input)
+    results = get_query_match(embd, 3)
+    context=""
+    for i, each in enumerate(results):
+        context += f"\n{i+1}."+each['text']+"\n"
+
+    answer = chatbot.get_response(context, user_input)
+
+    st.write(user_template.replace('{{MSG}}', user_input), unsafe_allow_html=True)
+    st.write(bot_template.replace('{{MSG}}', answer), unsafe_allow_html=True)
+    st.session_state.chats.append([user_input, answer])
 
 
 def main():
+    if "chats" not in st.session_state:
+        st.session_state.chats = []
     st.set_page_config(page_title="Chat with your PDFs", page_icon=":books:")
     st.header("Chat with your PDFs :books:")
-    st.text_input("Ask a question about your documents:")
+    user_input = st.text_input("Ask a question about your documents:")
+
+    if user_input:
+        handle_user_input(user_input)
 
     # sidebar
     with st.sidebar:

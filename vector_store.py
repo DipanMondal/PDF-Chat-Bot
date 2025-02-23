@@ -19,7 +19,7 @@ def get_query_match(query_embedding,n_results=5):
         query_embeddings=[query_embedding],
         n_results=n_results  # Retrieve top 5 matches(default)
     )
-    return results
+    return results['metadatas'][0]
 
 
 def delete_data(name):
